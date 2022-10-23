@@ -1,6 +1,6 @@
 Video https://youtube.com/shorts/U2ETFdtP66k
 
-Photos :
+Photos
 
 ![1_IMG_2443](https://user-images.githubusercontent.com/12098430/197392217-45de24fd-2ffe-4e5d-934b-ad0ccf4d47cd.JPG)
 
