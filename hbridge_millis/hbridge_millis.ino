@@ -54,19 +54,6 @@ void go_left(int pos_1 = LOW, int pos_2 = HIGH) {
   go_right(pos_2, pos_1);
 }
 
-// future optimisation
-//void go_forward_right(unsigned long start_time, unsigned long level_time) {
-//  while (millis() - start_time < myMeter + level_time) {
-//    Serial.println("FORWARD");
-//    go_forward();
-//  }
-//
-//  while(millis() - start_time < myMeter + time_go_right + level_time) {
-//    Serial.println("RIGHT");
-//    go_right();
-//  }
-//}
-
 void loop() {
   // time to connect a cabel to battery
   delay(2000);  
@@ -81,47 +68,5 @@ void loop() {
     go_forward();
   }
   
-  while(millis() - start_time  < myMeter + time_go_right) {
-    Serial.println("1 RIGHT");
-    go_right();
-  }
-  
-  //2nd
-  level_time = myMeter + time_go_right; //time of go_forward+go_right
-  while (millis() - start_time < myMeter + level_time) {
-     Serial.println("2 FORWARD");
-    go_forward();
-  }
-
-  while(millis() - start_time < myMeter + time_go_right + level_time) {
-    Serial.println("2 RIGHT");
-    go_right();
-  }
-
-  //3rd
-  level_time = myMeter + time_go_right; //time of go_forward+go_right
-  level_time = level_time * 2;
-  while (millis() - start_time < myMeter + level_time) {
-     Serial.println("3 FORWARD");
-    go_forward();
-  }
-
-  while(millis() - start_time < myMeter + time_go_right + level_time) {
-    Serial.println("3 RIGHT");
-    go_right();
-  }
-  
-  //4th
-  level_time = myMeter + time_go_right; //time of go_forward+go_right
-  level_time = level_time * 3;
-  while (millis() - start_time < myMeter + level_time) {
-     Serial.println("4 FORWARD");
-    go_forward();
-  }
-
-  while(millis() - start_time < myMeter + time_go_right + level_time) {
-    Serial.println("4 RIGHT");
-    go_right();
-  }
   
 }
