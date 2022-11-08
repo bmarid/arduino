@@ -11,13 +11,16 @@ int ENA_pin_2 = 10;
 int speed_EN_1 = 50;
 int speed_EN_2 = 58;
 
-unsigned long level_time= 0;
+int pushButton = 7;
 
+unsigned long level_time= 0;
 unsigned long time_go_right = 275; //time for rotation to the right, 90 degree
 unsigned long myMeter = 2500; //time to go 1 meter
 
 void setup() {
-  Serial.begin(9600);   
+  Serial.begin(9600); 
+  pinMode(pushButton, INPUT);
+     
   pinMode(motor1pin1, OUTPUT);
   pinMode(motor1pin2, OUTPUT);
   pinMode(motor2pin1, OUTPUT);
@@ -54,19 +57,32 @@ void go_left(int pos_1 = LOW, int pos_2 = HIGH) {
   go_right(pos_2, pos_1);
 }
 
+int counter = 0;
+
 void loop() {
   // time to connect a cabel to battery
-  delay(2000);  
+  delay(1000);  
+  
   analogWrite(ENA_pin_1, speed_EN_1);
   analogWrite(ENA_pin_2, speed_EN_2);
-
-  unsigned long start_time = millis();
- //1st
-  while (millis() - start_time < myMeter) {
-    Serial.println("1 FORWARD");
-    Serial.println(millis());
+  
+  int buttonState = digitalRead(pushButton);
+  Serial.println(buttonState);
+  
+  if(buttonState == 1){
+    counter = counter + 1;
+    Serial.println("counter = ");
+    Serial.println(counter);
+   }
+   
+   if(counter < 5) {
+    Serial.println("Go forward");
     go_forward();
-  }
+   } else {
+    Serial.println("Go back");
+    go_right();
+    }
+
   
   
 }
