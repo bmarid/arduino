@@ -11,6 +11,13 @@ int ENA_pin_2 = 10;
 int speed_EN_1 = 50;
 int speed_EN_2 = 58;
 
+<<<<<<< Updated upstream
+=======
+// light-dark sensor 1
+int pushButton = 7;
+
+
+>>>>>>> Stashed changes
 unsigned long level_time= 0;
 
 unsigned long time_go_right = 275; //time for rotation to the right, 90 degree
@@ -59,6 +66,22 @@ void loop() {
   delay(2000);  
   analogWrite(ENA_pin_1, speed_EN_1);
   analogWrite(ENA_pin_2, speed_EN_2);
+<<<<<<< Updated upstream
+=======
+  
+  int buttonState = digitalRead(pushButton);
+  Serial.println(buttonState);
+  
+  //go forward with line 
+  if(buttonState == 1){
+    Serial.println("Go forward");
+    go_forward();
+   }
+  else {
+    Serial.println("Go back");
+    go_back();
+    }
+>>>>>>> Stashed changes
 
   unsigned long start_time = millis();
  //1st
@@ -68,5 +91,9 @@ void loop() {
     go_forward();
   }
   
+<<<<<<< Updated upstream
   
 }
+=======
+}
+>>>>>>> Stashed changes
