@@ -96,14 +96,18 @@ void loop()
    
    if( (digitalRead(pushButton_L) == color) && (digitalRead(pushButton_R) == color)) {
     go_forward();
+    Serial.println("FORWARD");
    }
    if( (digitalRead(pushButton_L) == color) && (digitalRead(pushButton_R) != color)) { 
      go_left();
+      Serial.println("LEFT");
    }  
    if( (digitalRead(pushButton_L) != color) && (digitalRead(pushButton_R) == color)) { 
      go_right();
+      Serial.println("RIGHT");
    }
    if( (digitalRead(pushButton_L) != color) && (digitalRead(pushButton_R) != color)) { 
       go_back();
+       Serial.println("BACK");
     }
 }
