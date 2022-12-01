@@ -1,3 +1,4 @@
+/*Motors */
 int motor1pin1 = 2;
 int motor1pin2 = 3;
 
@@ -11,13 +12,21 @@ int speed_EN_2 = 58;
 int speed_new = 1;
 
 unsigned long level_time= 0;
-
 unsigned long time_go_right = 275;
 unsigned long myMeter = 2500; //1 meter
 unsigned long myMeter_first = 3000; //1 meter
 
+/*IR Sensors */
 int pushButton_L = 7; //L sensor
 int pushButton_R = 13; //R sensor 
+
+/* PID CONTROL */
+float Kp = 0;
+float Ki = 0;
+float Kd = 0;
+int P;
+int I; 
+int D; 
 
 void setup() 
 {
@@ -85,11 +94,12 @@ void go_forward_right(unsigned long level_time) {
     go_right();
   }
 }
+/***************************************************************/
 
 void loop() 
 {
 
-  analogWrite(ENA_pin_1, speed_new);
+analogWrite(ENA_pin_1, speed_new);
   analogWrite(ENA_pin_2, speed_new);
 
    int color = 0; // tracking white(0) , black(1) color
@@ -110,4 +120,41 @@ void loop()
       go_back();
        Serial.println("BACK");
     }
+}
+
+/*****************************************************************************************
+PID control 
+Proportional = error
+Integral = I + error 
+Derivative = current error = last error 
+error = set point - position 
+
+*/
+void PID_control() {
+  uint16_t position = qtr.readLineBlack(sensorValues); //read current position - I THINK WE NEED ENCODER
+  int error = 3500 - position; //3500 is the ideal position (the centre)
+
+  P = error;
+  I = I + error;
+  D = error - lastError;
+  lastError = error;
+  int motorspeed = P*Kp + I*Ki + D*Kd; //calculate the correction
+                                       //needed to be applied to the speed
+  
+  int motorspeeda = basespeeda + motorspeed;
+  int motorspeedb = basespeedb - motorspeed;
+  
+  if (motorspeeda > maxspeeda) {
+    motorspeeda = maxspeeda;
+  }
+  if (motorspeedb > maxspeedb) {
+    motorspeedb = maxspeedb;
+  }
+  if (motorspeeda < 0) {
+    motorspeeda = 0;
+  }
+  if (motorspeedb < 0) {
+    motorspeedb = 0;
+  } 
+  forward_brake(motorspeeda, motorspeedb);
 }
